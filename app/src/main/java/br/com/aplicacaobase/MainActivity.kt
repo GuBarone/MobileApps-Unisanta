@@ -12,19 +12,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        val edtTemp = findViewById<EditText>(R.id.edtTemperatura)
-        val txvResult = findViewById<TextView>(R.id.txvResult)
-        val btnConverter = findViewById<Button>(R.id.btnConverter)
-        btnConverter.setOnClickListener {
-            val tempC = edtTemp.text.toString().toFloatOrNull()
-            if (tempC != null){
-                val tempF = (tempC * 1.8) + 32
-                txvResult.text = "Temperatura em Fahrenheit: $tempF"
+        val nome = findViewById<EditText>(R.id.edtNome)
+        val idade = findViewById<EditText>(R.id.edtIdade)
+        val msg = findViewById<TextView>(R.id.txvMsg)
+        val enviar = findViewById<Button>(R.id.btnEnviar)
+        enviar.setOnClickListener {
+            if (nome.text.isBlank()) {
+                msg.text = "O campo nome não pode ficar vazio."
+                return@setOnClickListener
             }
-            else
-            {
-                txvResult.text = "O campo \'Temperatura Celsius\' deve ser numérico."
+            val idadeInt = idade.text.toString().toIntOrNull()
+            if (idadeInt == null || idadeInt < 0) {
+                msg.text = "O campo idade está ausente ou inválido."
+                return@setOnClickListener
             }
+            msg.text = "Bem-vindo!\nNome: ${nome.text}\nIdade: $idadeInt"
         }
     }
 }
